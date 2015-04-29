@@ -126,7 +126,14 @@ En particular,
 **Ejercicio 3** (0.25 puntos): Complete la siguiente definición que calcule la cantidad de operaciones aritméticas especificadas en una expresión aritmética.  Se considera que la expresión correspondiente a un simple literal especifica cero operaciones.
 
 > operaciones :: Expresión -> Integer
-> operaciones = undefined
+> operaciones 
+>   = \ case
+>     Suma           e1 e2 -> 1 + operaciones e1 + operaciones e2
+>     Resta          e1 e2 -> 1 + operaciones e1 + operaciones e2
+>     Multiplicación e1 e2 -> 1 + operaciones e1 + operaciones e2
+>     División       e1 e2 -> 1 + operaciones e1 + operaciones e2
+>     Negativo       e     -> 1 + operaciones e
+>     Literal        n     -> 0
 
 En particular,
 
@@ -139,7 +146,14 @@ En particular,
 **Ejercicio 4** (0.25 puntos): Complete la siguiente definición que calcule la suma de todos los literales presentes en una expresión aritmética.
 
 > sumaLiterales :: Expresión -> Integer
-> sumaLiterales = undefined
+> sumaLiterales
+>   = \ case
+>     Suma           e1 e2 -> sumaLiterales e1 + sumaLiterales e2
+>     Resta          e1 e2 -> sumaLiterales e1 + sumaLiterales e2
+>     Multiplicación e1 e2 -> sumaLiterales e1 + sumaLiterales e2
+>     División       e1 e2 -> sumaLiterales e1 + sumaLiterales e2
+>     Negativo       e     -> sumaLiterales e
+>     Literal        n     -> n
 
 En particular,
 
@@ -152,7 +166,14 @@ En particular,
 **Ejercicio 5** (0.25 puntos): Complete la siguiente definición que calcule la lista de todos los literales presentes en una expresión aritmética.
 
 > literales :: Expresión -> [Integer]
-> literales = undefined
+> literales
+>   = \ case
+>     Suma           e1 e2 -> literales e1 ++ literales e2
+>     Resta          e1 e2 -> literales e1 ++ literales e2
+>     Multiplicación e1 e2 -> literales e1 ++ literales e2
+>     División       e1 e2 -> literales e1 ++ literales e2
+>     Negativo       e     -> literales e
+>     Literal        n     -> [n]
 
 En particular,
 
@@ -165,7 +186,14 @@ En particular,
 **Ejercicio 6** (0.25 puntos): Complete la siguiente definición que calcule la altura de una expresión aritmética.  Se considera que un literal es una expresión aritmética de altura cero, y que todas las demás operaciones agregan uno a la altura.
 
 > altura :: Expresión -> Integer
-> altura = undefined
+> altura 
+>   = \ case
+>     Suma           e1 e2 -> 1 + maximum [altura e1, altura e2]
+>     Resta          e1 e2 -> 1 + maximum [altura e1, altura e2]
+>     Multiplicación e1 e2 -> 1 + maximum [altura e1, altura e2]
+>     División       e1 e2 -> 1 + maximum [altura e1, altura e2]
+>     Negativo       e     -> 1 + altura e
+>     Literal        n     -> 0
 
 En particular,
 
