@@ -353,7 +353,8 @@ debe generar el texto
 El orden en que genere las especificaciones de atributos es irrelevante.
 
 > instance RenderXHTML Atributos where
->   render = undefined
+>   render = foldWithKey f ""
+>       where f k a result = result ++ k ++ "='" ++ a ++ "' "
 
 ---
 
@@ -366,7 +367,8 @@ El texto generado debe corresponder a una etiqueta XHTML para el elemento dado. 
 o cualquier texto con el mismo significado en XHTML — el espacio en blanco, por ejemplo, es irrelevante.
 
 > instance RenderXHTML Elemento where
->   render = undefined
+>   render (Elemento eti atrib []) = "<" ++ eti ++ " " ++ (render atrib) ++ ">" ++ "</" ++ eti ++ ">"
+>   render (Elemento eti atrib [Texto s]) = "<" ++ eti ++ " " ++ (render atrib) ++ ">" ++ s ++ "</" ++ eti ++ ">"
 
 
 
