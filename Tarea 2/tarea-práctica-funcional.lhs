@@ -52,7 +52,7 @@ En esta sección puede agregar todas las directivas necesarias para importar sí
 > import Control.Applicative (pure)
 > import Control.DeepSeq     (NFData, ($!!))
 > import Control.Monad       (void)
-> import Data.Map            (Map, empty, foldMapWithKey, singleton)
+> import Data.Map            (Map, foldWithKey, empty, singleton)
 > import GHC.Generics        (Generic)
 > import System.Environment  (getArgs, getProgName)
 > import System.IO           (hPutStrLn, stderr)
@@ -292,27 +292,27 @@ Combinadores
 [^sufijos]: Se utiliza el sufijo `E` para evitar conflictos con los nombres `head` y `div` importados implícitamente desde el módulo `Prelude` de *Haskell*.
 
 > htmlE, headE, bodyE, divE :: [Elemento] -> Elemento
-> htmlE  = undefined
-> headE  = undefined
-> bodyE  = undefined
-> divE   = undefined
+> htmlE  = Elemento "html" (singleton "xmlns" "http://www.w3.org/1999/xhtml")
+> headE  = Elemento "head" empty
+> bodyE  = Elemento "body" empty
+> divE   = Elemento "div" empty
 
 ---
 
 **Ejercicio 10** (0.15 puntos cada una; 0.6 puntos en total): Complete las siguientes definiciones para combinadores que produzcan representaciones de los elementos de XHTML `title`, `style`, `h1` y `p` a partir de un `String` con el texto que debe incluirse dentro de ellos.  Los elementos resultantes de aplicar estos combinadores deben tener diccionarios de atributos vacíos, salvo el elemento `style` que debe tener el atributo `type` asociado al texto `text/css`.
 
 > styleE, titleE, h1E :: String -> Elemento
-> styleE = undefined
-> titleE = undefined
-> h1E    = undefined
-> pE     = undefined
+> styleE s = Elemento "style" (singleton "type" "text/css") [Texto s]
+> titleE s = Elemento "title" empty [Texto s]
+> h1E    s = Elemento "h1" empty [Texto s]
+> pE     s = Elemento "p" empty [Texto s]
 
 ---
 
 **Ejercicio 11** (0.2 puntos): Complete la siguiente definición para un combinador que produzca una representación del elemento de XHTML `p` a partir de un valor de cualquier tipo `a` que pertenezca a la clase de tipos `Show`; el elemento `p` resultante de aplicar este combinador debe contener únicamente un nodo de texto cuyo `String` sea el resultante de aplicar la función `show` al valor pasado como parámetro, y debe tener su diccionario de atributos vacío.
 
 > showP :: Show a => a -> Elemento
-> showP = undefined
+> showP x = pE (show x)
 
 ---
 
