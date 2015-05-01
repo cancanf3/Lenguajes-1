@@ -369,6 +369,7 @@ o cualquier texto con el mismo significado en XHTML — el espacio en blanco, po
 > instance RenderXHTML Elemento where
 >   render (Elemento eti atrib []) = "<" ++ eti ++ " " ++ (render atrib) ++ ">" ++ "</" ++ eti ++ ">"
 >   render (Elemento eti atrib [Texto s]) = "<" ++ eti ++ " " ++ (render atrib) ++ ">" ++ s ++ "</" ++ eti ++ ">"
+>   render (Elemento eti atrib els) = "<" ++ eti ++ " " ++ (render atrib) ++ ">" ++ (concat (map render els)) ++ "</" ++ eti ++ ">"
 
 
 
