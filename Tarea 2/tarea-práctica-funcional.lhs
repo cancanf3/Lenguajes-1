@@ -340,7 +340,14 @@ Se desea usar el método `render` para generar texto XHTML a partir de un valor 
 
 > instance RenderXHTML Documento where
 >   render (Documento raíz)
->     = undefined
+>     = encabezado ++ render raíz
+>       where encabezado
+>               = unlines
+>                   [ "<?xml version='1.0' encoding='UTF-8'?>"
+>                   , "<!DOCTYPE html"
+>                   , "     PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'"
+>                   , "     'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
+>                   ]
 
 ---
 
@@ -375,6 +382,7 @@ El texto generado debe corresponder a una etiqueta XHTML para el elemento dado. 
 o cualquier texto con el mismo significado en XHTML — el espacio en blanco, por ejemplo, es irrelevante.
 
 > instance RenderXHTML Elemento where
+>   render (Texto s) = s
 >   render (Elemento eti atrib []) = "<" ++ eti ++ " " ++ (render atrib) ++ ">" ++ "</" ++ eti ++ ">"
 >   render (Elemento eti atrib [Texto s]) = "<" ++ eti ++ " " ++ (render atrib) ++ ">" ++ s ++ "</" ++ eti ++ ">"
 >   render (Elemento eti atrib els) = "<" ++ eti ++ " " ++ (render atrib) ++ ">" ++ (concat (map render els)) ++ "</" ++ eti ++ ">"
@@ -397,7 +405,13 @@ Las operaciones aritméticas deben representarse con un elemento `div` que conte
 Escriba su definición en términos de `cataExpresión` y utilice los combinadores para elementos de XHTML que definió previamente.
 
 > expresiónXHTML :: Expresión -> Elemento
-> expresiónXHTML = undefined
+> expresiónXHTML (Literal x) = showP x
+> expresiónXHTML (Suma e1 e2) = divE ((expresiónXHTML e1):(pE "+"):(expresiónXHTML e2):[])
+> expresiónXHTML (Resta e1 e2) = divE ((expresiónXHTML e1):(pE "-"):(expresiónXHTML e2):[])
+> expresiónXHTML (Multiplicación e1 e2) = divE ((expresiónXHTML e1):(pE "*"):(expresiónXHTML e2):[])
+> expresiónXHTML (División e1 e2) = divE ((expresiónXHTML e1):(pE "/"):(expresiónXHTML e2):[])
+> expresiónXHTML (Negativo e) = divE ((pE "-"):(expresiónXHTML e):[])
+
 
 Por ejemplo, el resultado de `expresiónXHTML t2` debería ser igual al de
 
@@ -427,7 +441,7 @@ Antes de cada una de esas secciones, incluya un elemento `h1` con el nombre de l
 [^t3xhtml]: Ese ejemplo fue generado a partir de la expresión `t3`.
 
 > expresiónDocumento :: Expresión -> Documento
-> expresiónDocumento e = undefined
+> expresiónDocumento e = Documento (htmlE ((headE ((titleE "Expresión"):(styleE estilo):[])):(bodyE ((h1E "Expresión original"):(showP e):(h1E "Estructura"):(expresiónXHTML e):(h1E "Valor"):(showP (evaluar' e)):(h1E "Altura"):(showP (altura' e)):(h1E "Número de operaciones"):(showP (operaciones' e)):(h1E "Literales"):(showP (literales' e)):[])):[]))
 
 La siguiente definición contiene el texto necesario a incluir en el elemento `style` del documento a generar.  El elemento `style` con este contenido debe ser incluido en el elemento `head` del documento generado.
 
