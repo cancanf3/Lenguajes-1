@@ -225,14 +225,12 @@ En efecto, todo catamorfismo se construye de la misma forma para un tipo algebra
 >   -> (Integer -> a)
 >   -> Expresión -> a
 >
-> cataExpresión
->   suma
->   resta
->   multiplicación
->   división
->   negativo
->   literal
->   = undefined
+> cataExpresión f _ _ _ _ _ (Suma           e1 e2) = f (cataExpresión (+) (-) (*) (/) negate id e1) (cataExpresión (+) (-) (*) (/) negate id e2 )
+> cataExpresión _ f _ _ _ _ (Resta          e1 e2) = f (cataExpresión (+) (-) (*) (/) negate id e1) (cataExpresión (+) (-) (*) (/) negate id e2 )
+> cataExpresión _ _ f _ _ _ (Multiplicación e1 e2) = f (cataExpresión (+) (-) (*) (/) negate id e1) (cataExpresión (+) (-) (*) (/) negate id e2 )
+> cataExpresión _ _ _ f _ _ (División       e1 e2) = f (cataExpresión (+) (-) (*) (/) negate id e1) (cataExpresión (+) (-) (*) (/) negate id e2 )
+> cataExpresión _ _ _ _ f _ (Negativo          e) = f  (cataExpresión (+) (-) (*) (/) negate id e)
+> cataExpresión _ _ _ _ _ f (Literal           e) = e + 0
 
 ---
 
