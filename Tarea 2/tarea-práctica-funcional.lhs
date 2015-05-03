@@ -404,13 +404,21 @@ Las operaciones aritméticas deben representarse con un elemento `div` que conte
 
 Escriba su definición en términos de `cataExpresión` y utilice los combinadores para elementos de XHTML que definió previamente.
 
+
+> intP :: Integer -> Elemento
+> intP a = pE (show a)
+> 
+> sumDiv,resDiv, mulDiv, divDiv :: Elemento -> Elemento -> Elemento
+> sumDiv x y = divE [x,pE "+",y]
+> resDiv x y = divE [x,pE "-",y]
+> mulDiv x y = divE [x,pE "*",y]
+> divDiv x y = divE [x,pE "/",y]
+>
+> negDiv :: Elemento -> Elemento
+> negDiv x   = divE [pE "-",x]
+>
 > expresiónXHTML :: Expresión -> Elemento
-> expresiónXHTML (Literal x) = showP x
-> expresiónXHTML (Suma e1 e2) = divE ((expresiónXHTML e1):(pE "+"):(expresiónXHTML e2):[])
-> expresiónXHTML (Resta e1 e2) = divE ((expresiónXHTML e1):(pE "-"):(expresiónXHTML e2):[])
-> expresiónXHTML (Multiplicación e1 e2) = divE ((expresiónXHTML e1):(pE "*"):(expresiónXHTML e2):[])
-> expresiónXHTML (División e1 e2) = divE ((expresiónXHTML e1):(pE "/"):(expresiónXHTML e2):[])
-> expresiónXHTML (Negativo e) = divE ((pE "-"):(expresiónXHTML e):[])
+> expresiónXHTML a = cataExpresión sumDiv resDiv mulDiv divDiv negDiv intP a
 
 
 Por ejemplo, el resultado de `expresiónXHTML t2` debería ser igual al de
