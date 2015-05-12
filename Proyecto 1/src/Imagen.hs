@@ -13,7 +13,7 @@ subImagen
   -> Integer -> Integer
   -> Imagen -> Imagen
 
-subImagen = undefined
+subImagen xInicial yInicial anchura' altura' = Imagen anchura' altura' [[Color | x <- [0..anchura' - xInicial] | y <- [0..altura' - yInicial] ]]
 
 
 
