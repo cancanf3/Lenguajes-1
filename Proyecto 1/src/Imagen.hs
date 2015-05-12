@@ -13,7 +13,7 @@ subImagen
   -> Integer -> Integer
   -> Imagen -> Imagen
 
-subImagen xInicial yInicial anchura' altura' = Imagen anchura' altura' [[Color | x <- [0..anchura' - xInicial] | y <- [0..altura' - yInicial] ]]
+subImagen xInicial yInicial anchura' altura' (Imagen anchura'' altura'' pixels) = Imagen anchura' altura' [ take anchura' (drop xInicial (color!!x)) | x <- [yInicial..altura'] ]
 
 
 
