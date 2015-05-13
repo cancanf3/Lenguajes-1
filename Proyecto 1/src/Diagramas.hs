@@ -36,8 +36,12 @@ vefImagen _ Hoja Rectángulo colorP Imagen anchura' altura' color = if (anchura'
 
 
 dividir :: Orientación -> Rectángulo -> Maybe Diagrama
-dividir = 
-
+dividir orientación Rectángulo _ imagen
+  | orientación == Horizontal = Hoja Rectángulo (colorPromedio h1) h1 :|: Hoja Rectángulo (colorPromedio h2) h2
+  | orientación == Vertical   = Hoja Rectángulo (colorPromedio v1) v1 :-: Hoja Rectángulo (colorPromedio v2) v2
+  where (h1,h2) = hSplit imagen
+        (v1,v2) = vSplit imagen
+  
 caminar :: [Paso] -> Diagrama -> Maybe Diagrama
 caminar = undefined
 
