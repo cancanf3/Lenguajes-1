@@ -16,15 +16,27 @@ import Imagen (colorPromedio, hSplit, vSplit)
 
 
 rectánguloImagen :: Imagen -> Rectángulo
-rectánguloImagen = undefined
+rectánguloImagen imagen' = Rectángulo {color = colorPromedio imagen', imagen = imagen'} 
 
 data Orientación
   = Horizontal
   | Vertical
   deriving Show
 
+vefImagen :: Maybe Diagrama -> Maybe Diagrama
+vefImagen _ d1 :-: d2       = if (vefImagen d1) == Nothing || (vefImagen d2) == Nothing
+                                 then Nothing
+                                 else Maybe d1 :-: d2
+vefImagen _ d1 :|: d2       = if (vefImagen d1) == Nothing || (vefImagen d2) == Nothing
+                                 then Nothing
+                                 else Maybe d1 :|: d2
+vefImagen _ Hoja Rectángulo colorP Imagen anchura' altura' color = if (anchura' < 2) || (altura' < 2)
+                                                         then Nothing
+                                                         else Maybe Hoja Rectángulo colorPS Imagen anchura' altura' color
+
+
 dividir :: Orientación -> Rectángulo -> Maybe Diagrama
-dividir = undefined
+dividir = 
 
 caminar :: [Paso] -> Diagrama -> Maybe Diagrama
 caminar = undefined
