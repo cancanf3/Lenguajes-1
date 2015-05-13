@@ -1,0 +1,14 @@
+Undefined symbols for architecture x86_64:
+  "_iconv", referenced from:
+      _hs_iconv in libHSbase-4.7.0.2.a(iconv.o)
+     (maybe you meant: _base_GHCziIOziEncodingziIconv_iconvEncodingzuloc1_info, _base_GHCziIOziEncodingziIconv_iconvEncoding9_info , _hs_iconv_open , _base_GHCziIOziEncodingziIconv_iconvEncoding8_info , _base_GHCziIOziEncodingziIconv_iconvEncodingzuloc_closure , _base_GHCziIOziEncodingziIconv_iconvEncodingzuloc1_closure , _base_GHCziIOziEncodingziIconv_iconvEncoding6_info , _base_GHCziIOziEncodingziIconv_iconvEncoding10_info , _base_GHCziIOziEncodingziIconv_iconvEncoding7_info , _base_GHCziIOziEncodingziIconv_iconvEncoding10_closure , _base_GHCziIOziEncodingziIconv_iconvEncodingzuloc_info , _base_GHCziIOziEncodingziIconv_iconvEncoding3_closure , _base_GHCziIOziEncodingziIconv_iconvEncoding9_closure , _base_GHCziIOziEncodingziIconv_iconvEncoding8_closure , _hs_iconv , _hs_iconv_close , _base_GHCziIOziEncodingziIconv_iconvEncoding4_closure , _base_GHCziIOziEncodingziIconv_iconvEncoding3_info , _base_GHCziIOziEncodingziIconv_iconvEncoding7_closure , _base_GHCziIOziEncodingziIconv_iconvEncoding2_info , _base_GHCziIOziEncodingziIconv_iconvEncoding2_closure , _base_GHCziIOziEncodingziIconv_iconvEncoding6_closure )
+  "_iconv_close", referenced from:
+      _hs_iconv_close in libHSbase-4.7.0.2.a(iconv.o)
+     (maybe you meant: _hs_iconv_close)
+  "_iconv_open", referenced from:
+      _hs_iconv_open in libHSbase-4.7.0.2.a(iconv.o)
+     (maybe you meant: _hs_iconv_open)
+  "_locale_charset", referenced from:
+      _localeEncoding in libHSbase-4.7.0.2.a(PrelIOUtils.o)
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
