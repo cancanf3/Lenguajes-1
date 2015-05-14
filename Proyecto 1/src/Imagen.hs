@@ -44,7 +44,7 @@ azulSuma []                  = 0
 azulSuma ((Color _ _ a):xs)  = toInteger(a) + azulSuma xs 
 
 colorAnchura :: Imagen -> Integer
-colorAnchura Imagen anchura _ _ = anchura
+colorAnchura (Imagen anchura _ _) = anchura
 
 colorAltura :: Imagen -> Integer
-colorAltura Imagen _ altura _ = altura
+colorAltura (Imagen _ altura _)= altura
