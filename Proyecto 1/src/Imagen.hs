@@ -1,6 +1,8 @@
 module Imagen
   ( hSplit, vSplit
   , colorPromedio
+  , colorAnchura
+  , colorAltura
   )
   where
 
@@ -14,7 +16,7 @@ subImagen
   -> Imagen -> Imagen
 
 subImagen xInicial yInicial anchura' altura' (Imagen _ _ pixels) = 
-    Imagen anchura' altura' [ genericTake anchura' (genericDrop xInicial (genericIndex pixels x)) | x <- [yInicial..altura'] ]
+   Imagen anchura' altura' [ genericTake anchura' (genericDrop xInicial (genericIndex pixels x)) | x <- [yInicial..altura'] ]
 
 
 
@@ -40,3 +42,9 @@ verdeSuma ((Color _ v _):xs) = toInteger(v) + verdeSuma xs
 azulSuma :: [Color]  -> Integer
 azulSuma []                  = 0
 azulSuma ((Color _ _ a):xs)  = toInteger(a) + azulSuma xs 
+
+colorAnchura :: Imagen -> Integer
+colorAnchura Imagen anchura _ _ = anchura
+
+colorAltura :: Imagen -> Integer
+colorAltura Imagen _ altura _ = altura

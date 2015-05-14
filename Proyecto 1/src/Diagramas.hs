@@ -11,7 +11,7 @@ module
 import Graphics.Mosaico.Diagrama (Diagrama((:-:), (:|:), Hoja), Paso(Primero, Segundo), Rectángulo(Rectángulo, color, imagen))
 import Graphics.Mosaico.Imagen   (Imagen(Imagen, altura, anchura, datos))
 
-import Imagen (colorPromedio, hSplit, vSplit)
+import Imagen (colorPromedio, hSplit, vSplit, colorAltura, colorAnchura)
 
 
 
@@ -23,31 +23,25 @@ data Orientación
   | Vertical
   deriving Show
 
-vefImagen :: Diagrama -> Maybe Diagrama
-vefImagen d1 :-: d2       = if (vefImagen d1) == Nothing || (vefImagen d2) == Nothing
-                                 then Nothing
-                                 else Maybe d1 :-: d2
-vefImagen d1 :|: d2       = if (vefImagen d1) == Nothing || (vefImagen d2) == Nothing
-                                 then Nothing
-                                 else Maybe d1 :|: d2
-vefImagen Hoja Rectángulo colorP Imagen anchura' altura' color = if (anchura' < 2) || (altura' < 2)
-                                                         then Nothing
-                                                         else Maybe Hoja Rectángulo colorPS Imagen anchura' altura' color
 
 
 dividir :: Orientación -> Rectángulo -> Maybe Diagrama
-dividir orientación Rectángulo _ imagen
-  | orientación == Horizontal = vefImagen (Hoja Rectángulo (colorPromedio h1) h1 :|: Hoja Rectángulo (colorPromedio h2) h2)
-  | orientación == Vertical   = vefImagen (Hoja Rectángulo (colorPromedio v1) v1 :-: Hoja Rectángulo (colorPromedio v2) v2)
+dividir orientación (Rectángulo _ imagen)
+  | orientación == Horizontal = if ((colorAltura h1) < 2) || ((colorAltura h2) < 2)
+                                then Just (Hoja (Rectángulo (colorPromedio h1) h1) :|: Hoja (Rectángulo (colorPromedio h2) h2))
+                                else Nothing
+  | orientación == Vertical   = if ((colorAnchura h1) < 2) || ((colorAnchura h2) < 2)
+                                then Just (Hoja (Rectángulo (colorPromedio v1) v1) :-: Hoja (Rectángulo (colorPromedio v2) v2))
+                                else Nothing
   where (h1,h2) = hSplit imagen
         (v1,v2) = vSplit imagen
 
 caminar :: [Paso] -> Diagrama -> Maybe Diagrama
-caminar [] diagrama = Maybe diagrama
+caminar [] diagrama = Just diagrama
 caminar (x:xs) Hoja _ = Nothing
 caminar (x:xs) d1 op d2
-  x == Primero = caminar xs d1
-  x == Segundo = caminar xs d2
+  | x == Primero = caminar xs d1
+  | x == Segundo = caminar xs d2
 
 sustituir :: Diagrama -> [Paso] -> Diagrama -> Diagrama
 sustituir = undefined
