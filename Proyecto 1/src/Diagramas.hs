@@ -23,22 +23,22 @@ data Orientación
   | Vertical
   deriving Show
 
-vefImagen :: Maybe Diagrama -> Maybe Diagrama
-vefImagen _ d1 :-: d2       = if (vefImagen d1) == Nothing || (vefImagen d2) == Nothing
+vefImagen :: Diagrama -> Maybe Diagrama
+vefImagen d1 :-: d2       = if (vefImagen d1) == Nothing || (vefImagen d2) == Nothing
                                  then Nothing
                                  else Maybe d1 :-: d2
-vefImagen _ d1 :|: d2       = if (vefImagen d1) == Nothing || (vefImagen d2) == Nothing
+vefImagen d1 :|: d2       = if (vefImagen d1) == Nothing || (vefImagen d2) == Nothing
                                  then Nothing
                                  else Maybe d1 :|: d2
-vefImagen _ Hoja Rectángulo colorP Imagen anchura' altura' color = if (anchura' < 2) || (altura' < 2)
+vefImagen Hoja Rectángulo colorP Imagen anchura' altura' color = if (anchura' < 2) || (altura' < 2)
                                                          then Nothing
                                                          else Maybe Hoja Rectángulo colorPS Imagen anchura' altura' color
 
 
 dividir :: Orientación -> Rectángulo -> Maybe Diagrama
 dividir orientación Rectángulo _ imagen
-  | orientación == Horizontal = vefImagen Maybe (Hoja Rectángulo (colorPromedio h1) h1 :|: Hoja Rectángulo (colorPromedio h2) h2)
-  | orientación == Vertical   = vefImagen Maybe (Hoja Rectángulo (colorPromedio v1) v1 :-: Hoja Rectángulo (colorPromedio v2) v2)
+  | orientación == Horizontal = vefImagen (Hoja Rectángulo (colorPromedio h1) h1 :|: Hoja Rectángulo (colorPromedio h2) h2)
+  | orientación == Vertical   = vefImagen (Hoja Rectángulo (colorPromedio v1) v1 :-: Hoja Rectángulo (colorPromedio v2) v2)
   where (h1,h2) = hSplit imagen
         (v1,v2) = vSplit imagen
 
