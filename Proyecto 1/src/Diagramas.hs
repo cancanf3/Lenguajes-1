@@ -44,4 +44,13 @@ caminar (x:xs) (d1 :-: d2) = case x of Primero -> caminar xs d1
                                        Segundo -> caminar xs d2
 
 sustituir :: Diagrama -> [Paso] -> Diagrama -> Diagrama
-sustituir = undefined
+sustituir ds (x:[]) (d1 :|: d2) = case x of Primero -> (ds :|: d2)
+                                            Segundo -> (d1 :|: ds)
+sustituir ds (x:[]) (d1 :-: d2) = case x of Primero -> (ds :-: d2)
+                                            Segundo -> (d1 :-: ds)
+sustituir ds (x:xs) (d1 :|: d2) = case x of Primero -> (sustituir ds xs d1 :|: d2)
+                                            Segundo -> (d1 :|: sustituir ds xs d2)
+sustituir ds (x:xs) (d1 :-: d2) = case x of Primero -> (sustituir ds xs d1 :-: d2)
+                                            Segundo -> (d1 :-: sustituir ds xs d2)
+sustituir _ _ (Hoja _)    = error "La lista de pasos no concuerda con la estructura provista"
+
