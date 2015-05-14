@@ -43,7 +43,11 @@ dividir orientación Rectángulo _ imagen
         (v1,v2) = vSplit imagen
 
 caminar :: [Paso] -> Diagrama -> Maybe Diagrama
-caminar = undefined
+caminar [] diagrama = Maybe diagrama
+caminar (x:xs) Hoja _ = Nothing
+caminar (x:xs) d1 op d2
+  x == Primero = caminar xs d1
+  x == Segundo = caminar xs d2
 
 sustituir :: Diagrama -> [Paso] -> Diagrama -> Diagrama
 sustituir = undefined
