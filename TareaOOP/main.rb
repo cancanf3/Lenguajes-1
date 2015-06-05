@@ -28,3 +28,7 @@ arbol.dfs { |x| puts x.n }
 puts "--> Arbol2:"
 v = Next.new
 arbol2.dfs { |x| puts (x.n.visitado_por v) }
+
+arbol.dfs! { |x| x.n.visitado_por v }
+puts "--> Arbol1 dfs!:"
+arbol.dfs { |x| puts x.n }

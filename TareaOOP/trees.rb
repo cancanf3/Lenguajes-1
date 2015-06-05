@@ -9,6 +9,7 @@ class BT
     end
 
     def each &block
+        nodos = []
         if(l)
             yield l
             l.each &block
@@ -17,6 +18,7 @@ class BT
             yield r
             r.each &block
         end
+        return nodos
     end
 end
 

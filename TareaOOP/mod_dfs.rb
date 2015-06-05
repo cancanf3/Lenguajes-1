@@ -5,5 +5,7 @@ module DFS
     end
 
     def dfs! &block
+      @n = yield self
+      self.each &block
     end
 end
