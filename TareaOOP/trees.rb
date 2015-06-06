@@ -9,14 +9,13 @@ class BT
     end
 
     def each &block
-        nodos = []
         if(l)
             yield l
         end
         if(r)
             yield r
         end
-        return nodos
+        return nil
     end
 end
 
@@ -31,9 +30,6 @@ class RT
     end
 
     def each &block
-        @ss.each { |nodo|
-            yield nodo
-            nodo.each &block
-        }
+        @ss.each { |nodo| yield nodo }
     end
 end
