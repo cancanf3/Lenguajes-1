@@ -1,3 +1,25 @@
+=begin
+
+Mixin:              Permite tener clases que si cumplen los minimal implementation
+                    pueden usar los metodos de Monoid y Functor.
+Requerimientos:     Las clases que se extiendan de estos modulos deberan tener los
+                    siguientes metodos implementados:
+                    Monoid:
+                        mempty: Da el elemento neutra de esa clase
+                        mappend: Dos elementos de la clase son operados entre si
+                    Functor:
+                        fmap: Dado un bloque y una lista de elementos, esta es
+                        operada para crear una nueva lista usando ese bloque.
+Metodos:            Monoid:
+                        mconcat: Concatena una lista de elementos.
+                    Functor:
+                        inj: Dado un elemento y una lista de elementos, remplaza
+                        todos los elementos de la lista por el elemento dado
+Autores:            Jose Peña 11-10775 y Amin Arria 11-10053
+
+=end
+
+
 module Monoid
     #Minimal implementation
         # mempty  :: a
@@ -19,7 +41,8 @@ module Functor
 
     # (<$) :: a -> f b -> f a
     def inj a, fb
-        return self.fmap(a,fb)
+        fa = self.fmap(fb) { |b| a }
+        return fa
     end
 end
 
@@ -80,15 +103,21 @@ end
 class String
     extend Functor
 
-    def self.fmap(ab, fa)
-        return fa.gsub(/[\s\S]/, ab)
+    def self.fmap fa, &block
+        # return fa.gsub(/[\s\S]/, ab)
+        fb = ""
+        fa.each_char { |x| fb << (yield x) }
+        return fb
     end
 end
 
 class Fixnum
     extend Functor
 
-    def self.fmap(ab, fa)
-        return Array.new(fa.length) { ab }
+    def self.fmap(fa, &block)
+        # return Array.new(fa.length) { ab }
+        fb = []
+        fa.each { |x| fb << (yield x) }
+        return fb
     end
 end
