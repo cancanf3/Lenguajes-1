@@ -45,7 +45,7 @@ saltoEnPosicion(T, N, X, Y, solucion([L|LS], X, Y, [oeste|PS])) :- tableroValido
 
 
 
-salto(T, N, S) :- length(T,Xtam),!, between(0, Xtam, X), between(0,9,Y),  saltoEnPosicion(T, N, X, Y, S).
+salto([T|TS], N, S) :- length([T|TS],Xtam),length(T,Ytam),!, between(0, Xtam, X), between(0,Ytam,Y),  saltoEnPosicion([T|TS], N, X, Y, S).
 
 listaValida([]).
 listaValida([X|XS]) :- X >= 0, X =< 10, listaValida(XS).
