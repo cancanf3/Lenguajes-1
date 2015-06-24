@@ -31,14 +31,23 @@ aux(T, N, X, Y, solucion([L|LS], X, Y, [oeste|PS])) :- obtenerValor(T, X, Y, L),
 
 
 saltoEnPosicion(T, 0, X, Y, solucion([V], X, Y, [])) :- obtenerValor(T, X, Y, V).
+
 saltoEnPosicion(T, N, X, Y, solucion([L|LS], X, Y, [norte|PS])) :- tableroValido(T), obtenerValor(T, X, Y, L), 
          N1 is N-1, X1 is X-1, X>=0, aux(T, N1, X1, Y, solucion(LS, X1, Y, PS)).
+
 saltoEnPosicion(T, N, X, Y, solucion([L|LS], X, Y, [sur|PS])) :- tableroValido(T), obtenerValor(T, X, Y, L), 
          N1 is N-1, X1 is X+1, X>=0, aux(T, N1, X1, Y, solucion(LS, X1, Y, PS)).
+
 saltoEnPosicion(T, N, X, Y, solucion([L|LS], X, Y, [este|PS])) :- tableroValido(T), obtenerValor(T, X, Y, L), 
          N1 is N-1, Y1 is Y+1, X>=0, aux(T, N1, X, Y1, solucion(LS, X, Y1, PS)).
+
 saltoEnPosicion(T, N, X, Y, solucion([L|LS], X, Y, [oeste|PS])) :- tableroValido(T), obtenerValor(T, X, Y, L), 
          N1 is N-1, Y1 is Y-1, X>=0, aux(T, N1, X, Y1, solucion(LS, X, Y1, PS)).
+
+
+
+
+salto(T, N, S) :- length(T,Xtam),!, between(0, Xtam, X), between(0,9,Y),  saltoEnPosicion(T, N, X, Y, S).
 
 listaValida([]).
 listaValida([X|XS]) :- X >= 0, X =< 10, listaValida(XS).
